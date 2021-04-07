@@ -1,3 +1,5 @@
+[![CI](https://github.com/Lonor/go-eudic/actions/workflows/ci.yaml/badge.svg)](https://github.com/Lonor/go-eudic/actions/workflows/ci.yaml)
+
 # EUDIC SDK for Go
 
 ## REST endpoint
