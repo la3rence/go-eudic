@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go 1.16
@@ -28,4 +28,7 @@ jobs:
           fi
 
       - name: Test
+        env:
+          EUDIC_USERNAME: ${{ secrets.EUDIC_USERNAME }}
+          EUDIC_PASSWORD: ${{ secrets.EUDIC_PASSWORD }}
         run: go test ./... --cover -v
