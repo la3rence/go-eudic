@@ -1,16 +1,16 @@
 package go_eudic
 
 import (
-	"fmt"
+	"os"
 	"testing"
 )
 
 func TestLoginService_Login(t *testing.T) {
 	setup(t)
-	loginResponse, err := client.LoginService.Login("lonor@live.com", "EUDIC1412")
+	_, err := client.LoginService.Login(
+		os.Getenv("EUDIC_USERNAME"),
+		os.Getenv("EUDIC_PASSWORD"))
 	if err != nil {
 		t.Error(err)
 	}
-	fmt.Println(loginResponse.Token)
-	fmt.Println(loginResponse.Userid)
 }

@@ -1,7 +1,6 @@
 package go_eudic
 
 import (
-	"fmt"
 	"os"
 	"testing"
 )
@@ -16,6 +15,5 @@ func setup(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	fmt.Println(tempClient.Token)
 	client = tempClient
 }
