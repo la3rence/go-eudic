@@ -1,6 +1,8 @@
 package go_eudic
 
-import "net/http"
+import (
+	"net/http"
+)
 
 var (
 	getLastBookURI = "/route/recite/getlastbook"

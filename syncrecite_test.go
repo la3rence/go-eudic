@@ -6,7 +6,7 @@ import (
 )
 
 func TestSyncReciteService_SyncRecite(t *testing.T) {
-	setup()
+	setup(t)
 	book, _, _ := client.LastBookService.GetLastBook()
 	bookId := GetTheFirstNumberFromString(book.Meta.Bookid)
 	syncRecite, err := client.SyncReciteService.SyncRecite(bookId, book.BookName)

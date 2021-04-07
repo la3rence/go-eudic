@@ -7,7 +7,7 @@ import (
 )
 
 func TestCheckInInfoService_GetCheckInInfo(t *testing.T) {
-	setup()
+	setup(t)
 	checkInBody, checkInString, err := client.CheckInInfoService.GetCheckInInfo()
 	if err != nil {
 		t.Error(err)

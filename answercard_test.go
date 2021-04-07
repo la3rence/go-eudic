@@ -6,7 +6,7 @@ import (
 )
 
 func TestAnswerCardService_AnswerCard(t *testing.T) {
-	setup()
+	setup(t)
 	book, _, _ := client.LastBookService.GetLastBook()
 	bookId := GetTheFirstNumberFromString(book.Meta.Bookid)
 

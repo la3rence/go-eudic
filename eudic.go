@@ -21,12 +21,27 @@ type EudicClient struct {
 	client    *http.Client
 	Response  *Response
 
+	LoginService       *LoginService
 	UserInfoService    *UserInfoService
 	CheckInInfoService *CheckInInfoService
 	LastBookService    *LastBookService
 	SyncReciteService  *SyncReciteService
 	StartReciteService *StartReciteService
 	AnswerCardService  *AnswerCardService
+}
+
+func NewEudicClientByPassword(username, password string) (*EudicClient, error) {
+	client := &EudicClient{
+		BaseURL:   BaseURL,
+		UserAgent: UserAgent,
+		client:    &http.Client{},
+	}
+	loginService := &LoginService{client: client}
+	loginResponse, err := loginService.Login(username, password)
+	if err != nil {
+		return nil, err
+	}
+	return NewEudicClient(loginResponse.Userid, loginResponse.Token), nil
 }
 
 func NewEudicClient(userId, token string) *EudicClient {
@@ -38,6 +53,7 @@ func NewEudicClient(userId, token string) *EudicClient {
 		client:    &http.Client{},
 	}
 
+	client.LoginService = &LoginService{client: client}
 	client.UserInfoService = &UserInfoService{client: client}
 	client.CheckInInfoService = &CheckInInfoService{client: client}
 	client.LastBookService = &LastBookService{client: client}
@@ -73,6 +89,10 @@ func (eudic *EudicClient) Do(req *http.Request, v interface{}) (*Response, error
 		}
 	}()
 
+	err = CheckHTTPResponse(httpResponse)
+	if err != nil {
+		return nil, err
+	}
 	res := new(Response)
 	bodyBytes, _ := ioutil.ReadAll(httpResponse.Body)
 	tempStr := string(bodyBytes)
@@ -80,15 +100,29 @@ func (eudic *EudicClient) Do(req *http.Request, v interface{}) (*Response, error
 	if v != nil {
 		res.Data = v
 		err = json.Unmarshal(bodyBytes, res.Data)
+		if err != nil {
+			return nil, err
+		}
 		eudic.Response = res
 	}
 	return res, nil
 }
 
+func CheckHTTPResponse(httpResponse *http.Response) error {
+	if httpResponse.StatusCode == http.StatusOK {
+		return nil
+	}
+	if httpResponse.StatusCode == http.StatusUnauthorized {
+		return fmt.Errorf("认证失败 [%d]", httpResponse.StatusCode)
+	}
+	return fmt.Errorf("无效的请求 [%d]", httpResponse.StatusCode)
+
+}
+
 type Response struct {
-	Response   *http.Response
-	BodyStrPtr *string
-	Data       interface{}
+	HTTPResponse *http.Response
+	BodyStrPtr   *string
+	Data         interface{}
 }
 
 type RequestTokenBody struct {
