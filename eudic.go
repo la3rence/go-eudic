@@ -100,9 +100,6 @@ func (eudic *EudicClient) Do(req *http.Request, v interface{}) (*Response, error
 	if v != nil {
 		res.Data = v
 		err = json.Unmarshal(bodyBytes, res.Data)
-		if err != nil {
-			return nil, err
-		}
 		eudic.Response = res
 	}
 	return res, nil
