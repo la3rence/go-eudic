@@ -23,7 +23,7 @@ type EudicClient struct {
 
 	LoginService       *LoginService
 	UserInfoService    *UserInfoService
-	CheckInInfoService *CheckInInfoService
+	CheckInService     *CheckInService
 	LastBookService    *LastBookService
 	SyncReciteService  *SyncReciteService
 	StartReciteService *StartReciteService
@@ -55,7 +55,7 @@ func NewEudicClient(userId, token string) *EudicClient {
 
 	client.LoginService = &LoginService{client: client}
 	client.UserInfoService = &UserInfoService{client: client}
-	client.CheckInInfoService = &CheckInInfoService{client: client}
+	client.CheckInService = &CheckInService{client: client}
 	client.LastBookService = &LastBookService{client: client}
 	client.SyncReciteService = &SyncReciteService{client: client}
 	client.StartReciteService = &StartReciteService{client: client}
