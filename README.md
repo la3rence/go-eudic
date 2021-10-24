@@ -2,9 +2,20 @@
 
 # EUDIC SDK for Go
 
-## REST endpoint
+## HTTP REST endpoints
 
-This SDK only supports for the part of reciting with the API host: `https://api.frdic.com`
+This SDK only supports for the part of reciting with the API host: `https://api.frdic.com`, includes:
+
+```
+POST /api/v2/auth/authorize
+POST /route/recite/checkin
+POST /route/recite/getcheckininfo
+POST /route/recite/getlastbook
+POST /route/recite/answercard
+POST /route/recite/startrecite
+POST /route/recite/syncrecite
+POST /route/recite/getuserinfo
+```
 
 General HTTP Headers:
 
